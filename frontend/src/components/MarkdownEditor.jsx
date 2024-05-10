@@ -1,25 +1,26 @@
 import { TextField } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
-import ReactMarkdown from 'react-markdown'
 import Typography from '@mui/material/Typography'
 import { useState } from 'react'
 
 const MarkdownEditor = () => {
-  const [markdown, setMarkdown] = useState()
-  const handleMarkdownChange = (event) => {
-    // setMarkdown(event.target.value)
+  const [markdown, setMarkdown] = useState('hello world')
+  const [textValue, setTextValue] = useState('')
 
+  const handleMarkdownChange = (event) => {
+    const newValue = event.target.value
+    setTextValue(newValue)
     fetch('https://markdown2html.onrender.com/convert', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ markdown: event.target.value }),
+      body: JSON.stringify({ markdown: newValue }),
     })
       .then((response) => response.json())
       .then((data) => {
-        setMarkdown(data)
+        setMarkdown(data.html)
       })
       .catch((error) => console.log('error', error))
   }
@@ -32,14 +33,14 @@ const MarkdownEditor = () => {
           rows={100}
           variant="outlined"
           fullWidth
-          value={markdown}
-          onChange={handleMarkdownChange}
+          value={textValue}
+          onChange={(e) => handleMarkdownChange(e)}
         />
       </Grid>
       <Grid item xs={6}>
         <Paper variant="outlined" square>
           <Typography variant="h6">HTML Preview</Typography>
-          <ReactMarkdown>{markdown}</ReactMarkdown>
+          <div dangerouslySetInnerHTML={{ __html: markdown }}></div>
         </Paper>
       </Grid>
     </Grid>
