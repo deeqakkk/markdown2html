@@ -10,7 +10,7 @@ const MarkdownEditor = () => {
   const handleMarkdownChange = (event) => {
     // setMarkdown(event.target.value)
 
-    fetch('http://localhost:3001/convert', {
+    fetch('https://markdown2html.onrender.com/convert', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
