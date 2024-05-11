@@ -21,6 +21,10 @@ textarea {
   overflow: hidden;
 }
 
+textarea::placeholder{
+  color:white
+}
+
 .preview {
   padding: 8px;
   border: 1px solid white;
