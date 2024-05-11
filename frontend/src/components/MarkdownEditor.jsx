@@ -1,12 +1,10 @@
-import { TextField } from '@mui/material'
 import Grid from '@mui/material/Grid'
-import Paper from '@mui/material/Paper'
-import Typography from '@mui/material/Typography'
 import { useState } from 'react'
+import Typography from '@mui/material/Typography'
 
 const MarkdownEditor = () => {
-  const [markdown, setMarkdown] = useState('hello world')
-  const [textValue, setTextValue] = useState('')
+  const [markdown, setMarkdown] = useState('<h1>Hello World </h1>')
+  const [textValue, setTextValue] = useState('# Hello World')
 
   const handleMarkdownChange = (event) => {
     const newValue = event.target.value
@@ -25,23 +23,28 @@ const MarkdownEditor = () => {
       .catch((error) => console.log('error', error))
   }
 
+
   return (
     <Grid>
-      <Grid item xs={6}>
-        <TextField
-          label="Markdown"
-          rows={100}
-          variant="outlined"
-          fullWidth
-          value={textValue}
-          onChange={(e) => handleMarkdownChange(e)}
-        />
+      <Grid
+       className='topbar'
+      >
+        <Typography variant="h5" sx={{ textDecoration: 'underline' }}>
+          Markdown Preview Generator
+        </Typography>
       </Grid>
-      <Grid item xs={6}>
-        <Paper variant="outlined" square>
-          <Typography variant="h6">HTML Preview</Typography>
+      <Grid container>
+        <Grid xs={12} sm={12} md={6} item={true} className='markdown'>
+          <textarea
+            placeholder="Markdown"
+            rows={15}
+            value={textValue}
+            onChange={(e) => handleMarkdownChange(e)}
+          />
+        </Grid>
+        <Grid xs={12} sm={12} md={6} item={true} className='preview'>
           <div dangerouslySetInnerHTML={{ __html: markdown }}></div>
-        </Paper>
+        </Grid>
       </Grid>
     </Grid>
   )

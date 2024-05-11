@@ -11,16 +11,13 @@ app.use(cors())
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-  res.send(`Hello World- ${new Date().toTimeString()}`)
+  res.send('Hello World 👋')
 })
 
 app.post('/convert', (req, res) => {
   const { markdown } = req.body
-  console.log(markdown)
   const convertor = new showdown.Converter()
-
   const html = convertor.makeHtml(markdown)
-
   res.send({ html })
 })
 
